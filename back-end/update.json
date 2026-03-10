@@ -1,0 +1,10 @@
+{
+  "valorTotal": 20000,
+  "items": [
+    {
+      "idItem": "9999",
+      "quantidadeItem": 2,
+      "valorItem": 500
+    }
+  ]
+}

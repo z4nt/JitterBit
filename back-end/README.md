@@ -1,0 +1,93 @@
+# API de Pedidos (Order API)
+Olá me chamo Antoniel e esse é o meu desafio técnico para a JitterBit.
+
+Eu utilizei IA para me auxiliar no projeto, mas consigo explicar cada linha do codigo.
+Utilizei SQL puro por conta de limitações do ORM Sequelize.
+
+Este modulo de Back-End foi construido em Node.js com Express e SQLite para o gerenciamento de pedidos (CRUD completo), implementando os requisitos do desafio tecnico da JitterBit.
+
+Deixei dois JSONs de exemplo para testes.
+
+## Tecnologias Utilizadas
+Node.js
+Express
+SQLite3 (Banco de dados em arquivo local, sem ORM)
+JSON Web Token (Autenticacao)
+
+## Como Rodar o Projeto
+
+1. Abra o terminal na pasta do projeto back-end.
+2. Instale as dependencias executando:
+   npm install
+
+3. Inicie o servidor em modo de desenvolvimento executando:
+   npm run dev
+
+O terminal deve exibir a porta em que a aplicacao rodara (por padrao http://localhost:3000) e a conexao com o banco SQLite.
+
+## Passo 1: Autenticacao
+A API exige uma camada de autenticacao JWT. Para acessar os endpoints de Order, primeiro e necessario autuar via Login.
+
+Faca uma requisicao POST para /auth/login
+
+URL: http://localhost:3000/auth/login
+Method: POST
+Body (JSON):
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+Esse usuario está hardcodado no codigo para facilitar a autenticacao.
+
+Voce recebera de volta uma resposta com a sua credencial JWT ('token'). Copie esta string para usar nas instrucoes abaixo.
+
+## Passo 2: Endpoints da API
+
+Para todo acesso num endpoint de /order, deve-se incluir um Header de Autorizacao.
+Adicione um cabecalho na requisicao:
+Authorization: Bearer <seu_token_aqui>
+
+1. Criar um Pedido
+Recebe o payload em portugues (como solicitado). O sufixo do ID enviado pela URL (ex: "-01") sera removido no registro do BD.
+URL: http://localhost:3000/order
+Method: POST
+Body (JSON):
+{
+  "numeroPedido": "v10089015vdb-01",
+  "valorTotal": 10000,
+  "dataCriacao": "2023-07-19T12:24:11.5299601+00:00",
+  "items": [
+    {
+      "idItem": "2434",
+      "quantidadeItem": 1,
+      "valorItem": 1000
+    }
+  ]
+}
+
+2. Listar Todos os Pedidos
+URL: http://localhost:3000/order/list
+Method: GET
+
+3. Buscar um Pedido Especifico
+Para buscar pelo numero de pedido limpo, sem sufixo adicional:
+URL: http://localhost:3000/order/v10089015vdb
+Method: GET
+
+4. Atualizar um Pedido
+URL: http://localhost:3000/order/v10089015vdb
+Method: PUT
+Body (JSON): Utilize a mesma estrutura do Create enviando os novos valores de totais e os arrays de itens, se aplicavel.
+
+5. Deletar um Pedido
+URL: http://localhost:3000/order/v10089015vdb
+Method: DELETE
+
+## Estrutura do Codigo
+
+src/index.js: Porta de entrada da aplicacao
+src/database.js: Conexao com o SQLite e criacao das tabelas via SQL puro (CREATE TABLE)
+src/routes/: Contem a ramificacao completa de URLs para o modulo (express.Router)
+src/controllers/: Logica e persistencia de criacao das ordens, mapeamento dos JSONs PT -> EN
+src/middleware/: Contem a logica do validador JWT (authMiddleware.js) utilizado pelo modulo routes/
