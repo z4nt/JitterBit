@@ -87,7 +87,11 @@ Method: DELETE
 ## Estrutura do Código
 
 src/index.js: Porta de entrada da aplicação
+
 src/database.js: Conexão com o SQLite e criação das tabelas via SQL puro (CREATE TABLE)
+
 src/routes/: Contém a ramificação completa de URLs para o módulo (express.Router)
+
 src/controllers/: Lógica e persistência de criação das ordens, mapeamento dos JSONs PT -> EN
+
 src/middleware/: Contém a lógica do validador JWT (authMiddleware.js) utilizado pelo módulo routes/
