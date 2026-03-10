@@ -1,10 +1,10 @@
 # API de Pedidos (Order API)
 Olá me chamo Antoniel e esse é o meu desafio técnico para a JitterBit.
 
-Eu utilizei IA para me auxiliar no projeto, mas consigo explicar cada linha do codigo.
+Eu utilizei IA para me auxiliar no projeto, mas consigo explicar cada linha do código.
 Utilizei SQL puro por conta de limitações do ORM Sequelize.
 
-Este modulo de Back-End foi construido em Node.js com Express e SQLite para o gerenciamento de pedidos (CRUD completo), implementando os requisitos do desafio tecnico da JitterBit.
+Este módulo de Back-End foi construído em Node.js com Express e SQLite para o gerenciamento de pedidos (CRUD completo), implementando os requisitos do desafio técnico da JitterBit.
 
 Deixei dois JSONs de exemplo para testes.
 
@@ -12,23 +12,23 @@ Deixei dois JSONs de exemplo para testes.
 Node.js
 Express
 SQLite3 (Banco de dados em arquivo local, sem ORM)
-JSON Web Token (Autenticacao)
+JSON Web Token (Autenticação)
 
 ## Como Rodar o Projeto
 
 1. Abra o terminal na pasta do projeto back-end.
-2. Instale as dependencias executando:
+2. Instale as dependências executando:
    npm install
 
 3. Inicie o servidor em modo de desenvolvimento executando:
    npm run dev
 
-O terminal deve exibir a porta em que a aplicacao rodara (por padrao http://localhost:3000) e a conexao com o banco SQLite.
+O terminal deve exibir a porta em que a aplicação rodará (por padrão http://localhost:3000) e a conexão com o banco SQLite.
 
-## Passo 1: Autenticacao
-A API exige uma camada de autenticacao JWT. Para acessar os endpoints de Order, primeiro e necessario autuar via Login.
+## Passo 1: Autenticação
+A API exige uma camada de autenticação JWT. Para acessar os endpoints de Order, primeiro é necessário autuar via Login.
 
-Faca uma requisicao POST para /auth/login
+Faça uma requisição POST para /auth/login
 
 URL: http://localhost:3000/auth/login
 Method: POST
@@ -38,18 +38,18 @@ Body (JSON):
   "password": "admin"
 }
 
-Esse usuario está hardcodado no codigo para facilitar a autenticacao.
+Esse usuário está hardcodado no código para facilitar a autenticação.
 
-Voce recebera de volta uma resposta com a sua credencial JWT ('token'). Copie esta string para usar nas instrucoes abaixo.
+Você receberá de volta uma resposta com a sua credencial JWT ('token'). Copie esta string para usar nas instruções abaixo.
 
 ## Passo 2: Endpoints da API
 
-Para todo acesso num endpoint de /order, deve-se incluir um Header de Autorizacao.
-Adicione um cabecalho na requisicao:
+Para todo acesso num endpoint de /order, deve-se incluir um Header de Autorização.
+Adicione um cabeçalho na requisição:
 Authorization: Bearer <seu_token_aqui>
 
 1. Criar um Pedido
-Recebe o payload em portugues (como solicitado). O sufixo do ID enviado pela URL (ex: "-01") sera removido no registro do BD.
+Recebe o payload em português (como solicitado). O sufixo do ID enviado pela URL (ex: "-01") será removido no registro do BD.
 URL: http://localhost:3000/order
 Method: POST
 Body (JSON):
@@ -70,24 +70,24 @@ Body (JSON):
 URL: http://localhost:3000/order/list
 Method: GET
 
-3. Buscar um Pedido Especifico
-Para buscar pelo numero de pedido limpo, sem sufixo adicional:
+3. Buscar um Pedido Específico
+Para buscar pelo número de pedido limpo, sem sufixo adicional:
 URL: http://localhost:3000/order/v10089015vdb
 Method: GET
 
 4. Atualizar um Pedido
 URL: http://localhost:3000/order/v10089015vdb
 Method: PUT
-Body (JSON): Utilize a mesma estrutura do Create enviando os novos valores de totais e os arrays de itens, se aplicavel.
+Body (JSON): Utilize a mesma estrutura do Create enviando os novos valores de totais e os arrays de itens, se aplicável.
 
 5. Deletar um Pedido
 URL: http://localhost:3000/order/v10089015vdb
 Method: DELETE
 
-## Estrutura do Codigo
+## Estrutura do Código
 
-src/index.js: Porta de entrada da aplicacao
-src/database.js: Conexao com o SQLite e criacao das tabelas via SQL puro (CREATE TABLE)
-src/routes/: Contem a ramificacao completa de URLs para o modulo (express.Router)
-src/controllers/: Logica e persistencia de criacao das ordens, mapeamento dos JSONs PT -> EN
-src/middleware/: Contem a logica do validador JWT (authMiddleware.js) utilizado pelo modulo routes/
+src/index.js: Porta de entrada da aplicação
+src/database.js: Conexão com o SQLite e criação das tabelas via SQL puro (CREATE TABLE)
+src/routes/: Contém a ramificação completa de URLs para o módulo (express.Router)
+src/controllers/: Lógica e persistência de criação das ordens, mapeamento dos JSONs PT -> EN
+src/middleware/: Contém a lógica do validador JWT (authMiddleware.js) utilizado pelo módulo routes/
